@@ -16,8 +16,7 @@ function getHomeInformation($homeName) {
         ]);
 
         // HTMLの生成
-        $html = "<h2>Home</h2>
-        <p>Name: $homeName</p>
+        $html = "<p>Name: $homeName</p>
         <p>Address: $homeAddress</p>
         <script>
         var homeData = $homeData;

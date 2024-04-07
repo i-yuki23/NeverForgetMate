@@ -17,21 +17,28 @@
 // }
 var x = document.getElementById("demo");
 
-function getLocation() {
+function checkIfInsideHome() {
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition, showError);
+        navigator.geolocation.getCurrentPosition(showIsInside, showError);
     } else {
         x.innerHTML = "Geolocation is not supported by this browser.";
     }
 }
 
-function showPosition(position) {
+function showIsInside(position) {
+
+    x.innerHTML = isInside(position) ? "You are inside your home." : "You are outside your home.";
+}
+
+function isInside(position) {
     var yourLat = position.coords.latitude;
     var yourLng = position.coords.longitude;
-    x.innerHTML = "Latitude: " + yourLat + "<br>Longitude: " + yourLng;
-
-    // homeDataの使用
-    checkIfInsideHome(yourLat, yourLng);
+    
+    var inside = yourLat >= homeData.viewport.southwest.lat &&
+    yourLat <= homeData.viewport.northeast.lat &&
+    yourLng >= homeData.viewport.southwest.lng &&
+    yourLng <= homeData.viewport.northeast.lng;
+    return inside;
 }
 
 function showError(error) {
@@ -49,12 +56,4 @@ function showError(error) {
             x.innerHTML = "An unknown error occurred."
             break;
     }
-}
-
-function checkIfInsideHome(yourLat, yourLng) {
-    var inside = yourLat >= homeData.viewport.southwest.lat &&
-                 yourLat <= homeData.viewport.northeast.lat &&
-                 yourLng >= homeData.viewport.southwest.lng &&
-                 yourLng <= homeData.viewport.northeast.lng;
-    x.innerHTML += inside ? "<br>You are inside your home." : "<br>You are outside your home.";
 }
