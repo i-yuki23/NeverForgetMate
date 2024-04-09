@@ -9,6 +9,8 @@ RUN apt-get update \
     && pecl install xdebug \
     && docker-php-ext-enable xdebug
 
+RUN a2enmod rewrite
+
 # composer のインストール
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 ENV COMPOSER_ALLOW_SUPERUSER 1
@@ -17,3 +19,4 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 COPY ./src /var/www/html
 COPY ./docker/app/php.ini /usr/local/etc/php/php.ini
 COPY ./docker/app/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
+COPY ./docker/app/000-default.conf /etc/apache2/sites-enabled/000-default.conf
