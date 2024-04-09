@@ -9,11 +9,11 @@
 <body>
     <header>
         <h1>
-            <a href="index.php">NeverForgetMate</a>
+            <a href="/">NeverForgetMate</a>
         </h1>
     </header>
     <div>
-        <?php include $content; ?>
+        <?php echo $content; ?>
     </div>
 </body>
 </html>

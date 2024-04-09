@@ -1,14 +1,10 @@
 <?php
 
-require_once __DIR__ . '/../lib/mysql.php';
-require_once __DIR__ . '/../lib/utils.php';
-
-class ShuffleController extends Controller
+class CheckController extends Controller
 {
     public function index()
     {
         return $this->render([
-            'groups' => []
         ]);
     }
 

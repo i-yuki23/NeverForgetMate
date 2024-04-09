@@ -53,8 +53,8 @@ class Application
     {
         return [
             '/' => ['controller' => 'check', 'action' => 'index'],
-            // '/shuffle' => ['controller' => 'shuffle', 'action' => 'create'],
-            // '/employee' => ['controller' => 'employee', 'action' => 'index'],
+            '/location' => ['controller' => 'location', 'action' => 'index'],
+            '/location/create' => ['controller' => 'location', 'action' => 'create'],
             // '/employee/create' => ['controller' => 'employee', 'action' => 'create'],
         ];
     }
@@ -64,10 +64,10 @@ class Application
         return $this->request;
     }
 
-    public function getDatabaseManager()
-    {
-        return $this->databaseManager;
-    }
+    // public function getDatabaseManager()
+    // {
+    //     return $this->databaseManager;
+    // }
 
     private function render404Page()
     {

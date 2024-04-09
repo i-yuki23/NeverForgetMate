@@ -1,4 +1,4 @@
-<a href="registerLocation.php">Register Location</a>
+<a href="/location">Register Location</a>
 <div>
     <label for="isInside">Check if you are in this location:</label>
     <button id="checkButton" name="isInside">Check</button>

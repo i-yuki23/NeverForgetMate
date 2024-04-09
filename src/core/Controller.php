@@ -9,7 +9,7 @@ class Controller
     public function __construct($application)
     {
         $this->request = $application->getRequest();
-        $this->databaseManager = $application->getDatabaseManager();
+        // $this->databaseManager = $application->getDatabaseManager();
     }
 
     public function run($action)
