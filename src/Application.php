@@ -5,20 +5,20 @@ class Application
     protected $router;
     protected $response;
     protected $request;
-    protected $databaseManager;
+    // protected $databaseManager;
 
     public function __construct()
     {
         $this->router = new Router($this->registerRoutes());
         $this->response = new Response();
         $this->request = new Request();
-        $this->databaseManager = new DatabaseManager();
-        $this->databaseManager->connect([
-            'dbHost' => "db",
-            'dbName' => "test_database",
-            'dbPassword' => "pass",
-            'dbUsername' => "test_user",
-        ]);
+        // $this->databaseManager = new DatabaseManager();
+        // $this->databaseManager->connect([
+        //     'dbHost' => "db",
+        //     'dbName' => "test_database",
+        //     'dbPassword' => "pass",
+        //     'dbUsername' => "test_user",
+        // ]);
     }
 
     public function run()
@@ -52,10 +52,10 @@ class Application
     public function registerRoutes()
     {
         return [
-            '/' => ['controller' => 'shuffle', 'action' => 'index'],
-            '/shuffle' => ['controller' => 'shuffle', 'action' => 'create'],
-            '/employee' => ['controller' => 'employee', 'action' => 'index'],
-            '/employee/create' => ['controller' => 'employee', 'action' => 'create'],
+            '/' => ['controller' => 'check', 'action' => 'index'],
+            // '/shuffle' => ['controller' => 'shuffle', 'action' => 'create'],
+            // '/employee' => ['controller' => 'employee', 'action' => 'index'],
+            // '/employee/create' => ['controller' => 'employee', 'action' => 'create'],
         ];
     }
 
