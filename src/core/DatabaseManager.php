@@ -29,6 +29,4 @@ class DatabaseManager
     {
         $this->mysqli->close();
     }
-
-
 }

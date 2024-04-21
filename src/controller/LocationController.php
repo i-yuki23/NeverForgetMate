@@ -1,6 +1,6 @@
 <?php
 
-include __DIR__ . '/../lib/home.php';
+include __DIR__ . '/../lib/getUserLocationInfo.php';
 
 class LocationController extends Controller
 {
@@ -16,9 +16,12 @@ class LocationController extends Controller
             throw new HttpNotFoundException();
         }
         $locationName = htmlspecialchars($_POST['locationName']);
-        $homeInformation = getHomeInformation($locationName);
+        $userLocationInfo = getUserLocationInfo($locationName);
+
+        $this->databaseManager->get('Location')->insertUserLocation($userLocationInfo);
+
         return $this->render([
-            'homeInformation' => $homeInformation
+            'userLocationInfo' => $userLocationInfo
         ], $templete = "index");
     }
 }

@@ -4,6 +4,5 @@
     <input type="submit" value="Submit">
 </form>
 <?php if ($_SERVER["REQUEST_METHOD"] == "POST") : ?>
-    <?php echo $homeInformation; ?>
+    <?php echo $userLocationInfo; ?>
 <?php endif; ?>
-<

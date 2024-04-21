@@ -1,24 +1,28 @@
 <?php
 
+require __DIR__ . '/vendor/autoload.php';
+
 class Application
 {
     protected $router;
     protected $response;
     protected $request;
-    // protected $databaseManager;
+    protected $databaseManager;
 
     public function __construct()
     {
+        $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+        $dotenv->safeLoad();
         $this->router = new Router($this->registerRoutes());
         $this->response = new Response();
         $this->request = new Request();
-        // $this->databaseManager = new DatabaseManager();
-        // $this->databaseManager->connect([
-        //     'dbHost' => "db",
-        //     'dbName' => "test_database",
-        //     'dbPassword' => "pass",
-        //     'dbUsername' => "test_user",
-        // ]);
+        $this->databaseManager = new DatabaseManager();
+        $this->databaseManager->connect([
+            'dbHost' => $_ENV['DB_HOST'],
+            'dbName' => $_ENV['DB_NAME'],
+            'dbPassword' => $_ENV['DB_PASSWORD'],
+            'dbUsername' => $_ENV['DB_USERNAME'],
+        ]);
     }
 
     public function run()
@@ -55,7 +59,6 @@ class Application
             '/' => ['controller' => 'check', 'action' => 'index'],
             '/location' => ['controller' => 'location', 'action' => 'index'],
             '/location/create' => ['controller' => 'location', 'action' => 'create'],
-            // '/employee/create' => ['controller' => 'employee', 'action' => 'create'],
         ];
     }
 
@@ -64,10 +67,10 @@ class Application
         return $this->request;
     }
 
-    // public function getDatabaseManager()
-    // {
-    //     return $this->databaseManager;
-    // }
+    public function getDatabaseManager()
+    {
+        return $this->databaseManager;
+    }
 
     private function render404Page()
     {
