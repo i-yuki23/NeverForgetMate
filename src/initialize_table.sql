@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS `Items`;
 DROP TABLE IF EXISTS `UserLocations`;
 
 CREATE TABLE `UserLocations` (
-  `user_id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
   `address` varchar(255) NOT NULL,
   `southwest_lat` double NOT NULL,
   `southwest_lng` double NOT NULL,

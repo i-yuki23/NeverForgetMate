@@ -18,8 +18,12 @@ class LocationController extends Controller
         $locationName = htmlspecialchars($_POST['locationName']);
         $userLocationInfo = getUserLocationInfo($locationName);
 
-        $this->databaseManager->get('Location')->insertUserLocation($userLocationInfo);
-
+        // if($this->databaseManager->get('UserLocations')->dataExists($userId=1)) {
+        //     $this->databaseManager->get('UserLocations')->updateUserLocation($userId=1);
+        // } else {
+        //     $this->databaseManager->get('UserLocations')->insertUserLocation($userLocationInfo);
+        // }
+        $this->databaseManager->get('UserLocations')->insertUserLocation($userLocationInfo);
         return $this->render([
             'userLocationInfo' => $userLocationInfo
         ], $templete = "index");
