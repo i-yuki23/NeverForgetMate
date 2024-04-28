@@ -17,13 +17,13 @@ class LocationController extends Controller
         }
         $locationName = htmlspecialchars($_POST['locationName']);
         $userLocationInfo = getUserLocationInfo($locationName);
+        $userId = 1;
 
-        // if($this->databaseManager->get('UserLocations')->dataExists($userId=1)) {
-        //     $this->databaseManager->get('UserLocations')->updateUserLocation($userId=1);
-        // } else {
-        //     $this->databaseManager->get('UserLocations')->insertUserLocation($userLocationInfo);
-        // }
-        $this->databaseManager->get('UserLocations')->insertUserLocation($userLocationInfo);
+        if ($this->databaseManager->get('UserLocations')->dataExists($userId)) {
+            $this->databaseManager->get('UserLocations')->updateUserLocation($userId, $userLocationInfo);
+        } else {
+            $this->databaseManager->get('UserLocations')->insertUserLocation($userId, $userLocationInfo);
+        }
         return $this->render([
             'userLocationInfo' => $userLocationInfo
         ], $templete = "index");

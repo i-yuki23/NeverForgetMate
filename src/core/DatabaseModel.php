@@ -1,5 +1,5 @@
 <?php
-
+// TODO: Dependency Injection so we can easily test the code
 class DatabaseModel
 {
     protected $pdo;
