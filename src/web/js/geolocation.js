@@ -17,10 +17,10 @@ function isInside(position) {
     var yourLat = position.coords.latitude;
     var yourLng = position.coords.longitude;
     
-    var inside = yourLat >= homeData.viewport.southwest.lat &&
-    yourLat <= homeData.viewport.northeast.lat &&
-    yourLng >= homeData.viewport.southwest.lng &&
-    yourLng <= homeData.viewport.northeast.lng;
+    var inside = yourLat >= homeData.southwest_lat &&
+    yourLat <= homeData.northeast_lat &&
+    yourLng >= homeData.southwest_lng &&
+    yourLng <= homeData.northeast_lng;
     return inside;
 }
 
