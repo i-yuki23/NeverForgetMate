@@ -2,31 +2,28 @@
 
 class DatabaseManager
 {
-    protected $mysqli;
+    protected $pdo;
     protected $models;
 
     public function connect($params)
     {
-        $mysqli = mysqli_connect($params['dbHost'], $params['dbUsername'], $params['dbPassword'], $params['dbName']);
-        if (!$mysqli) {
-            echo 'Error: データベースに接続できませんでした' . PHP_EOL;
-            echo 'Debugging error: ' . mysqli_connect_error() . PHP_EOL;
-            exit;
+        $dsn = "mysql:host={$params['dbHost']};dbname={$params['dbName']};charset=utf8mb4";
+        try {
+            $this->pdo = new PDO($dsn, $params['dbUsername'], $params['dbPassword'], [
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, // Fetch as associative array
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, // Thorw Exception
+                PDO::ATTR_EMULATE_PREPARES => false, // Use real prepared statements (For SQL Injection prevention)
+              ]);
+        } catch (PDOException $e) {
+            error_log('Database connection failed: ' . $e->getMessage());
+            throw new Exception('Unable to connect to the database.');
         }
-        $this->mysqli = $mysqli;
     }
 
     public function get($modelName)
     {
-        $model = new $modelName($this->mysqli);
+        $model = new $modelName($this->pdo);
         $this->models[] = $model;
         return $model;
-    }
-
-    
-
-    public function __destrucrt()
-    {
-        $this->mysqli->close();
     }
 }

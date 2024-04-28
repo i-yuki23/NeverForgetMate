@@ -13,7 +13,7 @@ class CheckController extends Controller
         if (!$this->request->isPost()) {
             throw new HttpNotFoundException();
         }
-        $employeeNames = $this->databaseManager->get('Employee')->fetchAllName();
+        $locationsInfo = $this->databaseManager->get('UserLocations')->fetchLocationInfoById();
         $groups = createGroup($employeeNames);
         
         return $this->render([
