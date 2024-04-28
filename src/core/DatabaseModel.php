@@ -2,21 +2,20 @@
 
 class DatabaseModel
 {
-    protected $mysqli;
+    protected $pdo;
 
-    public function __construct($mysqli)
+    public function __construct($pdo)
     {
-        $this->mysqli = $mysqli;
+        $this->pdo = $pdo;
     }
 
     public function execute($sql, $params=[])
     {
-        $stmt = $this->mysqli->prepare($sql);
-        if ($params) {
-            $stmt->bind_param(...$params);
+        $stmt = $this->pdo->prepare($sql);
+        foreach ($params as $key => $val) {
+            $stmt->bindValue($key, $val);
         }
-
         $stmt->execute();
-        $stmt->close();
+        return $stmt;
     }
 }
