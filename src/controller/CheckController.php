@@ -4,20 +4,11 @@ class CheckController extends Controller
 {
     public function index()
     {
-        return $this->render([
-        ]);
-    }
-
-    public function create()
-    {
-        if (!$this->request->isPost()) {
-            throw new HttpNotFoundException();
-        }
-        $locationsInfo = $this->databaseManager->get('UserLocations')->fetchLocationInfoById();
-        $groups = createGroup($employeeNames);
+        $userId = 1;
+        $userLocationInfo = $this->databaseManager->get('UserLocations')->fetchUserLocationInfoByUserId($userId);
         
         return $this->render([
-            'groups' => $groups,
+            'userLocationInfo' => $userLocationInfo,
         ], 'index');
     }
 }

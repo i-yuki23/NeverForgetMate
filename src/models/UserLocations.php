@@ -1,5 +1,4 @@
 <?php
-
 class UserLocations extends DatabaseModel
 {
     public function insertUserLocation(int $userId, array $userLocationInfo) : int
@@ -45,7 +44,8 @@ class UserLocations extends DatabaseModel
                 southwest_lat = :southwest_lat, 
                 southwest_lng = :southwest_lng, 
                 northeast_lat = :northeast_lat, 
-                northeast_lng = :northeast_lng
+                northeast_lng = :northeast_lng,
+                updated_at = NOW()                  -- to avoid failing the update when the data is the same
              WHERE user_id = :userId',
             [
                 ':userId'          => $userId,
@@ -67,6 +67,15 @@ class UserLocations extends DatabaseModel
     public function dataExists(int $userId) : bool
     {
         $result = $this->execute('SELECT * FROM UserLocations WHERE user_id = :userId', [':userId' => $userId])->fetch(PDO::FETCH_ASSOC);
-        return is_array($result);
+        return count($result) > 0;
+    }
+
+    public function fetchUserLocationInfoByUserId(int $userId) : array
+    {
+        $result = $this->execute('SELECT * FROM UserLocations WHERE user_id = :userId', [':userId' => $userId])->fetch(PDO::FETCH_ASSOC);
+        if (count($result) === 0) {
+            throw new Exception('Failed to fetch data');
+        }
+        return $result;
     }
 }

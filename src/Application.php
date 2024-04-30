@@ -59,6 +59,7 @@ class Application
             '/' => ['controller' => 'check', 'action' => 'index'],
             '/location' => ['controller' => 'location', 'action' => 'index'],
             '/location/create' => ['controller' => 'location', 'action' => 'create'],
+            '/check/create' => ['controller' => 'check', 'action' => 'create'],
         ];
     }
 
