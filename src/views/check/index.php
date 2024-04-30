@@ -7,5 +7,5 @@
 <?php echo $userLocationInfo['address']; ?>
 <script>var homeData = <?php echo json_encode($userLocationInfo); ?>;</script>
 
-<script src="/js/check.js"></script>
+<script src="/js/checkIfInsideHome.js"></script>
 

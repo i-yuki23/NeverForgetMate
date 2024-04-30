@@ -1,5 +1,4 @@
 <?php
-
 class UserLocations extends DatabaseModel
 {
     public function insertUserLocation(int $userId, array $userLocationInfo) : int
@@ -45,7 +44,8 @@ class UserLocations extends DatabaseModel
                 southwest_lat = :southwest_lat, 
                 southwest_lng = :southwest_lng, 
                 northeast_lat = :northeast_lat, 
-                northeast_lng = :northeast_lng
+                northeast_lng = :northeast_lng,
+                updated_at = NOW()                  -- to avoid failing the update when the data is the same
              WHERE user_id = :userId',
             [
                 ':userId'          => $userId,
