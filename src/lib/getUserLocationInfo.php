@@ -20,18 +20,3 @@ function getUserLocationInfo($placeName) {
         return [];
     }
 }
-
-// JSONでJavaScriptに渡すためのデータ
-// $homeData = json_encode([
-//     'center' => $geometry['location'],
-//     'viewport' => $geometry['viewport']
-// ]);
-
-
-// HTMLの生成
-// $html = "<p>Name: $homeName</p>
-// <p>Address: $homeAddress</p>
-// <p>$homeData</p>
-// <script>
-// var homeData = $homeData;
-// </script>";
