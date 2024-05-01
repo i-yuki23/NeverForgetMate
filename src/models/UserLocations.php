@@ -73,9 +73,6 @@ class UserLocations extends DatabaseModel
     public function fetchUserLocationInfoByUserId(int $userId) : array
     {
         $result = $this->execute('SELECT * FROM UserLocations WHERE user_id = :userId', [':userId' => $userId])->fetch(PDO::FETCH_ASSOC);
-        if (count($result) === 0) {
-            throw new Exception('Failed to fetch data');
-        }
-        return $result;
+        return is_array($result) ? $result : [];
     }
 }
