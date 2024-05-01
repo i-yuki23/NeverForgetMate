@@ -8,9 +8,10 @@ class TopController extends Controller
     {
         $userId = 1;
         $userLocationInfo = $this->databaseManager->get('UserLocations')->fetchUserLocationInfoByUserId($userId);
-        
+        $alertTime = $this->databaseManager->get('AlertTimes')->fetchAlertTimeByUserId($userId);
         return $this->render([
             'userLocationInfo' => $userLocationInfo,
+            'alertTime' => $alertTime
         ], 'index');
     }
 
@@ -19,21 +20,28 @@ class TopController extends Controller
         if (!$this->request->isPost()) {
             throw new HttpNotFoundException();
         }
-        
-        $locationName = htmlspecialchars($_POST['locationName']);
-        $userLocationInfo = getUserLocationInfo($locationName);
-        $userId = 1;
 
-        // if the user location data exists, update it, otherwise insert it
-        if ($this->databaseManager->get('UserLocations')->dataExists($userId)) {
-            $this->databaseManager->get('UserLocations')->updateUserLocation($userId, $userLocationInfo);
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        };
+        if(isset($_SESSION['token']) && isset($_POST['token']) && $_SESSION['token'] === $_POST['token']) {
+            $locationName = htmlspecialchars($_POST['locationName']);
+            $userLocationInfo = getUserLocationInfo($locationName);
+            $userId = 1;
+    
+            // if the user location data exists, update it, otherwise insert it
+            if ($this->databaseManager->get('UserLocations')->dataExists($userId)) {
+                $this->databaseManager->get('UserLocations')->updateUserLocation($userId, $userLocationInfo);
+            } else {
+                $this->databaseManager->get('UserLocations')->insertUserLocation($userId, $userLocationInfo);
+            }
+            unset($_SESSION['token']);
+            header('location: /');
+            exit();
         } else {
-            $this->databaseManager->get('UserLocations')->insertUserLocation($userId, $userLocationInfo);
+            header('location: /');
+            exit();
         }
-
-        return $this->render([
-            'userLocationInfo' => $userLocationInfo         // render index.php 
-        ], $templete = "index");
     }
 
     public function registerTime()
@@ -42,16 +50,23 @@ class TopController extends Controller
             throw new HttpNotFoundException();
         }
 
-        $userId = 1;
-        $alertTime = htmlspecialchars($_POST['alertTime']);
-        if ($this->databaseManager->get('AlertTimes')->dataExists($userId)) {
-            $this->databaseManager->get('AlertTimes')->updateAlertTime($userId, $alertTime);
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        };
+        if(isset($_SESSION['token']) && isset($_POST['token']) && $_SESSION['token'] === $_POST['token']) {
+            $userId = 1;
+            $alertTime = htmlspecialchars($_POST['alertTime']);
+            if ($this->databaseManager->get('AlertTimes')->dataExists($userId)) {
+                $this->databaseManager->get('AlertTimes')->updateAlertTime($userId, $alertTime);
+            } else {
+                $this->databaseManager->get('AlertTimes')->insertAlertTime($userId, $alertTime);
+            }
+            unset($_SESSION['token']);
+            header('location: /');
+            exit();
         } else {
-            $this->databaseManager->get('AlertTimes')->insertAlertTime($userId, $alertTime);
+            header('location: /');
+            exit();
         }
-
-        return $this->render([
-            'alertTime' => $alertTime
-        ], $templete = "index");
     }
 }

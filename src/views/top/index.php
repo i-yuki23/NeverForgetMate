@@ -1,5 +1,13 @@
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+};
+$token = uniqid('', true);
+$_SESSION['token'] = $token;
+?>
 <form action="/top/registerLocation" id="locationForm" method="post">
     <label for="locationName">Register Your Location:</label>
+    <input type="hidden" name="token" value="<?php echo $token;?>">
     <input type="text" id="locationName" name="locationName" required>
     <input type="submit" value="Register">
 </form>
@@ -7,6 +15,7 @@
 <button name="isInside" class="js-check-button">Check</button>
 <form action="/top/registerTime" id="alertTimeForm" method="post">
     <label for="alertTime">Register Alert Time:</label>
+    <input type="hidden" name="token" value="<?php echo $token;?>">
     <input type="time" id="alertTime" name="alertTime" required>
     <input type="submit" value="Register">
 </form>
@@ -14,9 +23,9 @@
     <p>Registered Address:</p>
     <?php echo $userLocationInfo['address']; ?>
 <?php endif; ?>
-<?php if (isset($userLocationInfo['alert_time'])): ?>
+<?php if (isset($alertTime['alert_time'])): ?>
     <p>Registered Alert Time:</p>
-    <?php echo $userLocationInfo['alert_time']; ?>
+    <?php echo $alertTime['alert_time']; ?>
 <?php endif; ?>
 <script>var homeData = <?php echo json_encode($userLocationInfo); ?>;</script>
 <p id="demo"></p>
