@@ -66,8 +66,8 @@ class UserLocations extends DatabaseModel
 
     public function dataExists(int $userId) : bool
     {
-        $result = $this->execute('SELECT * FROM UserLocations WHERE user_id = :userId', [':userId' => $userId])->fetch(PDO::FETCH_ASSOC);
-        return count($result) > 0;
+        $result = $this->execute('SELECT COUNT(*) FROM UserLocations WHERE user_id = :userId', [':userId' => $userId])->fetchColumn();
+        return $result > 0;
     }
 
     public function fetchUserLocationInfoByUserId(int $userId) : array

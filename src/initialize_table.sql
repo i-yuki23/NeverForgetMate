@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS `UserLocations`;
+DROP TABLE IF EXISTS `AlertTimes`;
 
 CREATE TABLE `UserLocations` (
   `user_id` int NOT NULL,
@@ -7,6 +8,14 @@ CREATE TABLE `UserLocations` (
   `southwest_lng` double NOT NULL,
   `northeast_lat` double NOT NULL,
   `northeast_lng` double NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `AlertTimes` (
+  `user_id` int NOT NULL,
+  `alert_time` time NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`user_id`)

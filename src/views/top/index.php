@@ -6,6 +6,11 @@
 </form>
 <label for="isInside">Check if you are in this location:</label>
 <button name="isInside" class="js-check-button">Check</button>
+<form action="/top/registerTime" id="alertTimeForm" method="post">
+    <label for="alertTime">Register Alert Time:</label>
+    <input type="time" id="alertTime" name="alertTime" required>
+    <input type="submit" value="Register">
+</form>
 <p>Registered Address:</p>
 <?php echo $userLocationInfo['address']; ?>
 <script>var homeData = <?php echo json_encode($userLocationInfo); ?>;</script>

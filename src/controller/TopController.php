@@ -32,7 +32,26 @@ class TopController extends Controller
         }
 
         return $this->render([
-            'userLocationInfo' => $userLocationInfo
+            'userLocationInfo' => $userLocationInfo         // render index.php 
+        ], $templete = "index");
+    }
+
+    public function registerTime()
+    {
+        if (!$this->request->isPost()) {
+            throw new HttpNotFoundException();
+        }
+
+        $userId = 1;
+        $alertTime = htmlspecialchars($_POST['alertTime']);
+        if ($this->databaseManager->get('AlertTimes')->dataExists($userId)) {
+            $this->databaseManager->get('AlertTimes')->updateAlertTime($userId, $alertTime);
+        } else {
+            $this->databaseManager->get('AlertTimes')->insertAlertTime($userId, $alertTime);
+        }
+
+        return $this->render([
+            'alertTime' => $alertTime
         ], $templete = "index");
     }
 }

@@ -58,6 +58,7 @@ class Application
         return [
             '/' => ['controller' => 'top', 'action' => 'index'],
             '/top/registerLocation' => ['controller' => 'top', 'action' => 'registerLocation'],
+            '/top/registerTime' => ['controller' => 'top', 'action' => 'registerTime'],
         ];
     }
 
