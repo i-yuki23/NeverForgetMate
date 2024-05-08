@@ -56,10 +56,9 @@ class Application
     public function registerRoutes()
     {
         return [
-            '/' => ['controller' => 'check', 'action' => 'index'],
-            '/location' => ['controller' => 'location', 'action' => 'index'],
-            '/location/create' => ['controller' => 'location', 'action' => 'create'],
-            '/check/create' => ['controller' => 'check', 'action' => 'create'],
+            '/' => ['controller' => 'top', 'action' => 'index'],
+            '/top/registerLocation' => ['controller' => 'top', 'action' => 'registerLocation'],
+            '/top/registerTime' => ['controller' => 'top', 'action' => 'registerTime'],
         ];
     }
 
