@@ -10,6 +10,8 @@ class Controller
     {
         $this->request = $application->getRequest();
         $this->databaseManager = $application->getDatabaseManager();
+        $this->startSession();
+        $this->generateCsrfToken();
     }
 
     public function run($action)
@@ -31,5 +33,23 @@ class Controller
         $controllerName = strtolower(substr(get_class($this), 0, -10));
         $path = $controllerName . '/' . $templete;
         return $view->render($path, $variables, $layout);
+    }
+
+    protected function startSession() {
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+    }
+
+    protected function generateCsrfToken() {
+        if (!isset($_SESSION['token'])) {
+            $_SESSION['token'] = uniqid('', true);
+        }
+    }
+
+    public function verifyCsrfToken() {
+        if ($this->request->isPost() && (!isset($_SESSION['token']) || !isset($_POST['token']) || $_SESSION['token'] !== $_POST['token'])) {
+            throw new HttpException("Invalid CSRF token", 403);
+        }
     }
 }
